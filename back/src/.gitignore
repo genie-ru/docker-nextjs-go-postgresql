@@ -1,0 +1,36 @@
+# コンパイルされたバイナリ
+*.exe
+*.dll
+*.so
+*.dylib
+*.out
+
+# Go モジュールキャッシュ
+/vendor/
+/go.sum
+go.sum
+# テスト結果関連
+*.test
+
+# プロファイルやデバッグ関連
+*.prof
+*.trace
+*.cov
+
+# MacOS 特有のファイル
+.DS_Store
+.AppleDouble
+.LSOverride
+.Icon?
+.metadata_never_index
+.Spotlight-V100
+.Trashes
+
+# IDE/エディタ関連
+.vscode/
+.idea/
+*.code-workspace
+*.iml
+
+.env*.local
+.env

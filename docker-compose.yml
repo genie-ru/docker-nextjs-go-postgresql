@@ -1,0 +1,43 @@
+services:
+  front:
+    build: ./front
+    container_name: front
+    tty: true
+    ports:
+      - 3000:3000
+      - 6006:6006
+    stdin_open: true
+    # プロジェクトディレクトリにマウントする
+    volumes:
+      - ./front/next-app:/app/next-app
+    working_dir: /app/next-app
+    environment:
+      - WATCHPACK_POLLING=true
+    # command: sh -c "npm i && npm run dev"
+    command: sh -c "bun run dev & npm run storybook --p 6006 --ci"
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    container_name: back
+    ports:
+      - 1323:1323
+    tty: true
+    restart: always
+    volumes:
+      - ./back/src:/go/src
+    working_dir: /go/src
+    command: air -c .air.toml
+  db:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:
